@@ -46,3 +46,20 @@ END
 GO
 
 -- DROP PROC sp_DSSP_GiaTrongKhoang
+
+-- e. Cho danh sách các sản phẩm bán chạy nhất (số lượng bán nhiều nhất)
+
+SELECT SP.MaSP, SP.TenSP, SUM(CT.SoLuong) AS TongSoLuong
+FROM SanPham SP JOIN CT_HoaDon CT ON SP.MaSP = CT.MaSP
+GROUP BY SP.MaSP, SP.TenSP
+ORDER BY SUM(CT.SoLuong) DESC
+
+-- f. Cho danh sách các sản phẩm có doanh thu cao nhất
+
+SELECT SP.MaSP, SP.TenSP, SUM(CT.SoLuong) AS TongSoLuong, SUM(CT.SoLuong) * (CT.GiaBan - CT.GiaGiam) AS TongTien
+FROM SanPham SP JOIN CT_HoaDon CT ON SP.MaSP = CT.MaSP
+GROUP BY SP.MaSP, SP.TenSP, CT.GiaBan, CT.GiaGiam
+ORDER BY SUM(CT.SoLuong) * (CT.GiaBan - CT.GiaGiam) DESC
+
+USE QUAN_LI_KHACH_HANG_DO_AN_1
+GO
