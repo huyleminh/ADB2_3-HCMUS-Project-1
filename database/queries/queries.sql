@@ -35,3 +35,14 @@ GO
 -- DROP PROCEDURE IF EXISTS sp_DSKH_TPHCM
 -- DROP PROCEDURE IF EXISTS sp_DSSP_SoLuongTon_ItHon_100
 -- GO
+
+-- c. Cho danh sách các sản phẩm có giá trong một khoảng từ ... đến ...
+CREATE PROC sp_DSSP_GiaTrongKhoang
+(@min_price FLOAT, @max_price FLOAT)
+AS
+BEGIN
+	SELECT * FROM SanPham AS sp WHERE sp.Gia >= @min_price AND sp.Gia <= @max_price
+END
+GO
+
+-- DROP PROC sp_DSSP_GiaTrongKhoang
