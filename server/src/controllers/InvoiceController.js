@@ -1,5 +1,8 @@
 import { Router } from "express";
-import connectionPool from "../utilities/database/DatabaseConnection.js";
+import Order from "../utilities/database/entities/Order.js";
+import Customer from "../utilities/database/entities/Customer.js";
+import { v4 as uuidv4 } from "uuid";
+import OrderDetail from "../utilities/database/entities/OrderDetail.js";
 
 class InvoiceController {
     constructor() {
@@ -8,20 +11,45 @@ class InvoiceController {
     }
 
     initializeRouters() {
-        this.router.get("/example", this.handleExample);
+        this.router.post("/invoices", this.createNewInvoice);
     }
 
-    async handleExample(req, res) {
-        // You must be put all your await into try catch or use Promise.then().catch() to handle the flow.
-        // This is an example.
+    async createNewInvoice(req, res) {
+        const { customerDetail, orderDetail } = req.body;
+
         try {
-            const pool = await connectionPool;
-            const resp = await pool.query(`select * from BOMON`);
-            console.log(resp);
-            res.json({ status: 200, data: resp });
+            if (customerDetail.id === null) {
+                customerDetail.id = uuidv4();
+                if (customerDetail.dob.length > 10) {
+                    customerDetail.dob = customerDetail.dob.substr(0, 10);
+                }
+
+                // insert new customer.
+                await Customer.insert(customerDetail);
+            }
+
+            // 25200000 = 7 * 3600 * 1000
+            const orderId = uuidv4();
+            const dateCreatedAsMiliseconds = new Date(Date.now() + 25200000);
+            const dateCreated = dateCreatedAsMiliseconds.toISOString();
+
+            // insert new order.
+            await Order.insert({
+                orderId: orderId,
+                customerId: customerDetail.id,
+                dateCreated: dateCreated.substr(0, 10)
+            })
+
+            // insert new order's detail.
+            await OrderDetail.insertList(
+                orderDetail.map((element) => {
+                    return { orderId, ...element };
+                })
+            )
+
+            res.json({ status: 201 });
         } catch (e) {
-            console.log(e);
-            res.json({ status: 500, message: "Internal error." });
+            res.json({ status: 500, message: "Server error" });
         }
     }
 }

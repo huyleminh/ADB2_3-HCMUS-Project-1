@@ -1,20 +1,6 @@
 USE QUAN_LI_KHACH_HANG_DO_AN_1
 GO
 
-CREATE FUNCTION fn_TinhTongTien (@MaHD varchar(36))
-RETURNS float
-AS
-BEGIN
-	DECLARE @TongTien FLOAT
-	SET @TongTien = (SELECT SUM(ThanhTien) FROM CT_HoaDon WHERE MaHD = @MaHD)
-
-	IF @TongTien IS NULL
-		SET @TongTien = 0
-
-	RETURN @TongTien
-END
-GO
-
 --TRIGGER: Thành tiền CTHD = (Số lượng * (Giá bán-Giá giảm)
 CREATE TRIGGER tg_ThanhTienCTHD ON CT_HoaDon
 FOR INSERT, UPDATE
