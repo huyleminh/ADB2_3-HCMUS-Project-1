@@ -11,7 +11,27 @@ class InvoiceController {
     }
 
     initializeRouters() {
+        this.router.get("/invoices", this.getAllInvoicesByPage);
         this.router.post("/invoices", this.createNewInvoice);
+    }
+
+    async getAllInvoicesByPage(req, res) {
+        const page = parseInt(req.query.page);
+        const offset = parseInt(req.query.offset);
+        const startIndex = (page - 1) * offset;
+
+        try {
+            const orderList = await Order.getAll();
+            res.json({
+                status: 200,
+                data: {
+                    orderList: orderList.slice(startIndex, startIndex + offset),
+                    pagination: { page: page, total: orderList.length }
+                }
+            })
+        } catch (e) {
+            res.json({ status: 500, message: "Server error" });
+        }
     }
 
     async createNewInvoice(req, res) {
