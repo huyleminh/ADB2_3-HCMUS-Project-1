@@ -9,15 +9,13 @@ function InvoiceFeature(props) {
     const match = useRouteMatch();
 
     return (
-        <div>
-            <Switch>
-                <Route exact path={`${match.path}/create`} component={CreateInvoicePage} />
-                <Route exact path={`${match.path}`} component={InvoiceListPage} />
-                <Route>
-                    <Redirect to="/404" />
-                </Route>
-            </Switch>
-        </div>
+        <Switch>
+            <Route exact path={`${match.path}/create`} component={CreateInvoicePage} />
+            <Route exact path={`${match.path}`} component={InvoiceListPage} />
+            <Route>
+                <Redirect to="/404" />
+            </Route>
+        </Switch>
     );
 }
 
