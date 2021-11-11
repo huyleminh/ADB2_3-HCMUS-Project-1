@@ -11,8 +11,25 @@ class InvoiceController {
     }
 
     initializeRouters() {
+        this.router.get("/invoices/revenue", this.getIncomeInAYear);
         this.router.get("/invoices", this.getAllInvoicesByPage);
         this.router.post("/invoices", this.createNewInvoice);
+    }
+
+    async getIncomeInAYear(req, res) {
+        const year = parseInt(req.query.year);
+
+        try {
+            const incomeList = await Order.getIncomeInAYear(year);
+            const data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            incomeList.forEach((element) => {
+                data[parseInt(element.month) - 1] = element.totalMoney;
+            })
+
+            res.json({ status: 200, data });
+        } catch (e) {
+            res.json({ status: 500, message: "Server error" });
+        }
     }
 
     async getAllInvoicesByPage(req, res) {
