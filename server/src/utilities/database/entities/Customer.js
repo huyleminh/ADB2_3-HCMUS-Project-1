@@ -37,7 +37,6 @@ class Customer {
                 const response = await pool.query(sqlStatement);
                 resolve();
             } catch (e) {
-                console.log(e);
                 reject(e);
             }
         })

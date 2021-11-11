@@ -8,6 +8,29 @@ class Order {
         this.totalMoney = totalMoney;
     }
     
+    static getIncomeInAYear = (year) => {
+        return new Promise(async (resolve, reject) => {
+            const sqlStatement = `
+            SELECT 
+                HD_Thang.Thang AS 'month',
+                SUM(HD_Thang.TongTien) as totalMoney
+            FROM (
+                    SELECT TongTien, MONTH(NgayLap) AS Thang
+                    FROM HoaDon
+                    WHERE YEAR(NgayLap) = ${year}
+                ) AS HD_Thang
+            GROUP BY HD_Thang.Thang`;
+
+            try {
+                const pool = await connectionPool;
+                const response = await pool.query(sqlStatement);
+                resolve(response.recordset);
+            } catch (e) {
+                reject(e);
+            }
+        })
+    }
+
     static getAll = () => {
         return new Promise(async (resolve, reject) => {
             const sqlStatement = `
@@ -25,7 +48,6 @@ class Order {
                 const response = await pool.query(sqlStatement);
                 resolve(response.recordset);
             } catch (e) {
-                console.log(e);
                 reject(e);
             }
         })
@@ -47,7 +69,6 @@ class Order {
                 const response = await pool.query(sqlStatement);
                 resolve();
             } catch (e) {
-                console.log(e);
                 reject(e);
             }
         })
