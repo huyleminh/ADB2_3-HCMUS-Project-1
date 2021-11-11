@@ -1,0 +1,37 @@
+.content-wrapper {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+}
+
+.detail_button, .create-button {
+	display: flex;
+	background-color: #0f4f8b;
+	color: white;
+	border: 1px solid #0f4f8b;
+	border-radius: 5px;
+	height: 40px;
+	transition: all 0.2s;
+	margin: 0px;
+	padding: 7px 10px;
+}
+
+.detail_button:hover, .create-button:hover {
+	cursor: pointer;
+	background-color: #1890ff;
+	border: 1px solid #1890ff;
+}
+
+.loading, .button-wrapper {
+    padding: 5px;
+}
+
+.loading > span {
+    margin-left: 10px;
+}
+
+.command-bar {
+	display: flex;
+	justify-content: flex-end;
+	padding: 5px 30px;
+}
