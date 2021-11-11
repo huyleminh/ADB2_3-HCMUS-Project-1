@@ -1,0 +1,47 @@
+.create-invoice {
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-invoice-top {
+    width: 100%;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.create-invoice-top h2 {
+    cursor: pointer;
+    margin: 0;
+}
+
+.create-invoice-top span {
+    margin-right: 5px;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+.create-invoice-top:hover h2,
+.create-invoice-top:hover span {
+    color: #1890ff;
+}
+
+.create-invoice-body {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.create-invoice-steps {
+    margin: 20px 0px;
+    padding: 0px 20px;
+}
+
+.create-invoice-step {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
