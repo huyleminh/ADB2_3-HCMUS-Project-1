@@ -41,6 +41,37 @@ class Customer {
             }
         })
     }
+
+    static getByOneAttribute = (name, value) => {
+        return new Promise(async (resolve, reject) => {
+            const sqlStatement = `
+            SELECT
+                MaKH as id,
+                Ten as firstName,
+                Ho as lastName,
+                NgSinh as dob,
+                DienThoai as phoneNumber,
+                SoNha as houseNumber,
+                Duong as street,
+                Phuong as ward,
+                Quan as district,
+                Tpho as city
+            FROM KhachHang
+            WHERE ${name} = '${value}'`
+            
+            let pool;
+            try {
+                pool = await connectionPool;
+                const response = await pool.query(sqlStatement);
+                resolve(response.recordset);
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            } finally {
+                // pool.close();
+            }
+       })
+    }
 }
 
 export default Customer;
