@@ -73,6 +73,38 @@ class Order {
             }
         })
     }
+
+    static getOrderDetailByOrderId = (orderId) => {
+        return new Promise(async (resolve, reject) => {
+            const sqlStatement = `
+            SELECT
+                HD.MaKH as customerId,
+                HD.NgayLap as dateCreated,
+                HD.TongTien as totalMoney,
+                SP.TenSP as productName,
+                CTHD.SoLuong as quantity,
+                CTHD.GiaBan as price,
+                CTHD.GiaGiam as discount,
+                CTHD.ThanhTien as totalAmount
+            FROM HoaDon HD JOIN CT_HoaDon CTHD
+            ON HD.MaHD = CTHD.MaHD
+            JOIN SanPham SP
+            ON CTHD.MaSP = SP.MaSP
+            WHERE HD.MaHD = '${orderId}'`
+
+            let pool;
+            try {
+                pool = await connectionPool
+                const response = await pool.query(sqlStatement)
+                resolve(response.recordset)
+            } catch (e) {
+                console.log(e)
+                reject(e)
+            } finally {
+                // pool.close()
+            }
+        })
+    }
 }
 
 export default Order;
