@@ -1,0 +1,30 @@
+.content-wrapper {
+    display: flex;
+    padding: 30px;
+    justify-content: flex-start;
+}
+
+.customer-info {
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.info {
+    margin: 0px 10px;
+}
+
+.customer-info ul {
+    list-style: none;
+    display: table;
+    padding: 0px;
+}
+
+.customer-info li {
+    display: table-row;
+}
+
+.customer-info b {
+    display: table-cell;
+    padding-right: 1em;
+}
