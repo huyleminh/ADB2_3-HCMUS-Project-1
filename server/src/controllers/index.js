@@ -4,5 +4,6 @@ import InvoiceController from "./InvoiceController.js";
 const AppControllers = [
     new InvoiceController(),
     new CustomerController(),
+    new ProductController(),
 ];
 export default AppControllers;
