@@ -13,10 +13,22 @@
     justify-content: space-between;
 }
 
-.logo {
+.logo, .logo-collapsed {
     height: 50px;
     margin: 16px;
     background: rgba(255, 255, 255, 0.3);
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 600;
+    transition: all 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-collapsed {
+    font-size: 0.8em;
 }
 
 .custom-site-content .trigger {

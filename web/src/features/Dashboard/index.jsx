@@ -22,7 +22,7 @@ function DashBoard(props) {
     return (
         <Layout className="custom-site-dashboard">
             <Sider trigger={null} collapsible collapsed={collapsed} width="300px" breakpoint="md">
-                <div className="logo"></div>
+            {collapsed ? (<div className="logo-collapsed"><span>ADB2_3</span></div>) : (<div className="logo"><span>ADB2_3</span></div>)}
                 <Sidebar selectedKey={location.pathname} />
             </Sider>
 
