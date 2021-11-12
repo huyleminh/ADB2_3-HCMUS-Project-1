@@ -14,6 +14,7 @@ class InvoiceController {
         this.router.get("/invoices/revenue", this.getIncomeInAYear);
         this.router.get("/invoices", this.getAllInvoicesByPage);
         this.router.post("/invoices", this.createNewInvoice);
+        this.router.get("/invoices/:id", this.getInvoiceByID)
     }
 
     async getIncomeInAYear(req, res) {
@@ -87,6 +88,44 @@ class InvoiceController {
             res.json({ status: 201 });
         } catch (e) {
             res.json({ status: 500, message: "Server error" });
+        }
+    }
+
+    async getInvoiceByID(req, res) {
+        const { id } = req.params
+        try {
+            const order = await Order.getOrderDetailByOrderId(id);
+            const orderDetail = order.map((record) => {
+                return {
+                    productName: record.productName,
+                    quantity: record.quantity,
+                    price: record.price,
+                    discount: record.discount,
+                    totalAmount: record.totalAmount
+                }
+            });
+
+            const customerDetail = await Customer.getByOneAttribute(
+                'MaKH',
+                order[0].customerId
+            );
+
+            res.json({
+                status: 200,
+                data: {
+                    customerDetail: {
+                        id: customerDetail[0].id,
+                        firstName: customerDetail[0].firstName,
+                        lastName: customerDetail[0].lastName,
+                        phoneNumber: customerDetail[0].phoneNumber,
+                    },
+                    dateCreated: order[0].dateCreated,
+                    totalMoney: order[0].totalMoney,
+                    orderDetail
+                }
+            })
+        } catch (e) {
+            res.json({ status: 500, message: "Server error" })
         }
     }
 }
