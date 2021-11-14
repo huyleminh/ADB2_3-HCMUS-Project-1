@@ -8,35 +8,39 @@
 ## Usage
 * Before running the project, please install [NodeJS](https://nodejs.org/en/), version 14.x is highly recommended.
 
-* Please intall all packages:
+* Please install all packages:
 
     * Install all packages for the server:
-        ```
-        npm run install-server
-        ```
-        or
         ```
         cd server
         npm i
         ```
     * Install all packages for the client:
-
         ```
-        npm run install-web
+        cd web
+        npm i
+        ```
+* Please read and follow the instructions in env.sample in both web and server folder.
+* Run the app:
+    *  You must run the server first:
+        ```
+        cd server
+        npm start
         ```
         or
         ```
-        cd client
-        npm i
-        ```
-
-    *  You must run the server first:
-        ```
-        npm run server
+        cd server
+        npm run dev
         ```
     *  Then create a new terminal window to run the client
         ```
+        cd web
         npm run web
+        ```
+        or
+        ```
+        cd web
+        npm start
         ```
 * Now enjoy the app!
 
